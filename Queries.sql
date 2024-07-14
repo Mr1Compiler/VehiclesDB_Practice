@@ -145,3 +145,124 @@ order by Make
  where (FuelTypes.FuelTypeName = N'GAS')
 
 ------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 12 ------------------------------------------
+
+select count(*) as TotalMakesRunsOnGas from
+(
+ select distinct Makes.Make, FuelTypes.FuelTypeName 
+ from  VehicleDetails
+ inner join FuelTypes on 
+ FuelTypes.FuelTypeID = VehicleDetails.FuelTypeID 
+ inner join Makes on
+ Makes.MakeID = VehicleDetails.MakeID
+  where (FuelTypes.FuelTypeName = N'GAS')
+ )R1
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 13 ------------------------------------------
+
+select Makes.Make, count(VehicleDetails.MakeID) as NumberOfVehicles from VehicleDetails 
+inner join Makes on 
+Makes.MakeID = VehicleDetails.MakeID
+group by Makes.Make
+order by NumberOfVehicles desc
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 14 ------------------------------------------
+
+select Makes.Make, count(VehicleDetails.MakeID) as NumberOfVehicles
+from VehicleDetails 
+inner join Makes on 
+Makes.MakeID = VehicleDetails.MakeID
+group by Makes.Make
+having count(*) > 20000
+order by NumberOfVehicles desc
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 15 ------------------------------------------
+
+select Makes.Make 
+from Makes
+where Makes.Make like 'B%';
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 16 ------------------------------------------
+
+select Makes.Make 
+from Makes
+where Makes.Make like '%W';
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 17 ------------------------------------------
+
+select count(*) as MakeWithFWD from 
+(
+select distinct Makes.Make, DriveTypes.DriveTypeName
+from VehicleDetails
+inner join Makes on Makes.MakeID = VehicleDetails.MakeID
+inner join DriveTypes on DriveTypes.DriveTypeID = VehicleDetails.DriveTypeID
+where DriveTypeName = N'FWD'
+)R1
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 18 ------------------------------------------
+
+select Makes.Make, DriveTypes.DriveTypeName, count(*) as Total 
+from VehicleDetails inner join Makes on Makes.MakeID = VehicleDetails.MakeID
+inner join DriveTypes on DriveTypes.DriveTypeID = VehicleDetails.DriveTypeID
+group by DriveTypes.DriveTypeName, Makes.Make
+order by Makes.Make asc, Total desc
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 19 ------------------------------------------
+
+select Makes.Make, DriveTypes.DriveTypeName, count(*) as Total 
+from VehicleDetails inner join Makes on Makes.MakeID = VehicleDetails.MakeID
+inner join DriveTypes on DriveTypes.DriveTypeID = VehicleDetails.DriveTypeID
+group by DriveTypes.DriveTypeName, Makes.Make
+having count(*) > 10000
+order by Makes.Make asc, Total desc
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 20 ------------------------------------------
+
+select * from VehicleDetails
+where NumDoors is null
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 21 ------------------------------------------
+
+select count(*) as TotalWithNoSpecifiedDoors from VehicleDetails
+where NumDoors is null
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 22 ------------------------------------------
+
+select 
+(
+	cast ((select count(*) as TotalWithNoSpecifiedDoors from VehicleDetails where NumDoors is null)
+	as float)
+	/
+	cast((select count(*) from VehicleDetails) as float)
+)as PercOfNoSpecifiedDoors
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 23 ------------------------------------------
+
+select distinct Makes.MakeID, Makes.Make, SubModels.SubModelName from VehicleDetails 
+inner join Makes on Makes.MakeID = VehicleDetails.MakeID
+inner join SubModels on SubModels.SubModelID = VehicleDetails.SubModelID
+where SubModels.SubModelName = N'Elite'
+
+------------------------------------------------------------------------------------------------
