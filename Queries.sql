@@ -111,3 +111,37 @@ group by Makes.Make
 order by NumberOfVehicles desc
 
 ------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 9 ------------------------------------------
+
+select  Makes.Make,FuelTypes.FuelTypeName, count(*) as NumberOfVehicles 
+from VehicleDetails
+inner join Makes on Makes.MakeID = VehicleDetails.MakeID
+inner join FuelTypes on FuelTypes.FuelTypeID = VehicleDetails.FuelTypeID
+where (VehicleDetails.Year between 1950 and 2000)
+group by Make, FuelTypes.FuelTypeName
+order by Make
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 10 ------------------------------------------
+
+ select VehicleDetails.*, FuelTypes.FuelTypeID 
+ from  VehicleDetails
+ inner join FuelTypes on 
+ FuelTypes.FuelTypeID = VehicleDetails.FuelTypeID 
+ where (FuelTypes.FuelTypeName = N'GAS')
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 11 ------------------------------------------
+
+ select distinct Makes.Make, FuelTypes.FuelTypeName 
+ from  VehicleDetails
+ inner join FuelTypes on 
+ FuelTypes.FuelTypeID = VehicleDetails.FuelTypeID 
+ inner join Makes on
+ Makes.MakeID = VehicleDetails.MakeID
+ where (FuelTypes.FuelTypeName = N'GAS')
+
+------------------------------------------------------------------------------------------------
