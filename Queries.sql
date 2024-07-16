@@ -266,3 +266,48 @@ inner join SubModels on SubModels.SubModelID = VehicleDetails.SubModelID
 where SubModels.SubModelName = N'Elite'
 
 ------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 24 ------------------------------------------
+
+select * from VehicleDetails
+where Engine_Liter_Display > 3 and NumDoors = 2
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 25 ------------------------------------------
+
+select Makes.Make, VehicleDetails.*
+from VehicleDetails
+inner join Makes on Makes.MakeID = VehicleDetails.MakeID
+where (VehicleDetails.Engine like '%OHV%') and (VehicleDetails.Engine_Cylinders = 4)
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 26 ------------------------------------------
+
+select Bodies.BodyName, VehicleDetails.*
+from VehicleDetails
+inner join Bodies on VehicleDetails.BodyID = Bodies.BodyID
+where Bodies.BodyName in ('Sport Utility', 'Coupe','Sedan') 
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 27 ------------------------------------------
+
+select Bodies.BodyName, VehicleDetails.*
+from VehicleDetails
+inner join Bodies on VehicleDetails.BodyID = Bodies.BodyID
+where Bodies.BodyName in ('Sport Utility', 'Coupe','Sedan') 
+and
+VehicleDetails.Year in (2008, 2020, 2021)
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 28 ------------------------------------------
+
+select found = 1
+where
+exists
+(select top 1 * from VehicleDetails where Year = 1950)
+
+------------------------------------------------------------------------------------------------
