@@ -311,3 +311,114 @@ exists
 (select top 1 * from VehicleDetails where Year = 1950)
 
 ------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 29 ------------------------------------------
+
+select Vehicle_Display_Name, NumDoors,
+case 
+	when NumDoors = 0 then 'Zero Doors'
+	when NumDoors = 1 then 'One Doors'
+	when NumDoors = 2 then 'Two Doors'
+	when NumDoors = 3 then 'Three Doors'
+	when NumDoors = 4 then 'Four Doors'
+	when NumDoors = 5 then 'Five Doors'
+	when NumDoors = 6 then 'Six Doors'
+	when NumDoors = 8 then 'Eight Doors'
+	when NumDoors is null then 'Not Set'
+	else 'UnKnown'
+end as DoorsDiscription
+from VehicleDetails
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 30 ------------------------------------------
+
+Select VehicleDetails.Vehicle_Display_Name, Year, Age= YEAR(GetDate()) - VehicleDetails.year
+from VehicleDetails
+Order by Age Desc
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 31 ------------------------------------------
+
+select * from
+(
+Select VehicleDetails.Vehicle_Display_Name, Year, Age= YEAR(GetDate()) - VehicleDetails.year
+from VehicleDetails
+)R1
+where Age between 15 and 20
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 32 ------------------------------------------
+
+select  Min(Engine_CC) as MinimimEngineCC,Max(Engine_CC) as MaximumEngineCC, AVG(Engine_CC) as AverageEngineCC
+from VehicleDetails
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 33 ------------------------------------------
+
+select Vehicle_Display_Name from VehicleDetails 
+where Engine_CC =
+(
+	select  Min(Engine_CC) as MinEnginCC
+	from VehicleDetails
+)
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 34 ------------------------------------------
+
+select Vehicle_Display_Name from VehicleDetails 
+where Engine_CC =
+(
+	select  Max(Engine_CC) as MaxEnginCC
+	from VehicleDetails
+)
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 35 ------------------------------------------
+
+select Vehicle_Display_Name from VehicleDetails 
+where Engine_CC <
+(
+	select  Avg(Engine_CC) as MinEngineCC  
+	from VehicleDetails
+)
+
+------------------------------------------------------------------------------------------------
+
+
+------------------------------------------ Problem 36	 ------------------------------------------
+
+select count(*) as NumberOfVehiclesAboveAverageEngineCC from
+(
+select Vehicle_Display_Name from VehicleDetails where Engine_CC > (select Avg(Engine_CC) as MinEngineCC from VehicleDetails )
+)R1
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 37	 ------------------------------------------
+
+
+Select  distinct  Engine_CC from VehicleDetails
+Order By Engine_CC Desc
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 38	 ------------------------------------------
+
+select distinct top 3 Engine_CC from VehicleDetails
+order by Engine_CC desc
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 39	 ------------------------------------------
+
+select Vehicle_Display_Name from VehicleDetails 
+where Engine_CC in
+(
+    select distinct top 3 Engine_CC from VehicleDetails
+	order by Engine_CC desc
+)
+------------------------------------------------------------------------------------------------
