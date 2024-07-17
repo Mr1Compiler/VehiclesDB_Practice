@@ -515,3 +515,48 @@ group by Makes.Make
 )R1
 
 ------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 47	 ------------------------------------------
+
+select Makes.Make, COUNT(*) as NumberOfModels
+from Makes INNER JOIN
+MakeModels ON Makes.MakeID = MakeModels.MakeID
+group by Makes.Make
+having COUNT(*) = 
+(
+select Max(NumberOfModels) as MaxNumberOfModels
+from
+(
+select MakeID, COUNT(*) AS NumberOfModels
+from MakeModels
+group by MakeID											
+) R1
+)
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 48	 ------------------------------------------
+
+select Makes.Make, COUNT(*) as NumberOfModels
+from Makes INNER JOIN
+MakeModels ON Makes.MakeID = MakeModels.MakeID
+group by Makes.Make
+having COUNT(*) = 
+(
+select Min(NumberOfModels) as MaxNumberOfModels
+from
+(
+select MakeID, COUNT(*) AS NumberOfModels
+from MakeModels
+group by MakeID											
+) R1
+)
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 49	 ------------------------------------------
+
+select * from FuelTypes
+order by NewID()
+
+------------------------------------------------------------------------------------------------
