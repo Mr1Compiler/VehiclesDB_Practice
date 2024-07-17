@@ -422,3 +422,96 @@ where Engine_CC in
 	order by Engine_CC desc
 )
 ------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 40	 ------------------------------------------
+
+
+select distinct makes.Make from VehicleDetails 
+inner join Makes
+on Makes.MakeID = VehicleDetails.MakeID
+where 
+(
+    VehicleDetails.Engine_CC in 
+	(
+	select distinct top 3 Engine_CC from VehicleDetails
+	order by Engine_CC desc
+	)
+)
+order by Make
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 41	 ------------------------------------------
+
+select Engine_CC,
+
+	CASE
+		WHEN Engine_CC between 0 and 1000 THEN 100
+		 WHEN Engine_CC between 1001 and 2000 THEN 200
+		 WHEN Engine_CC between 2001 and 4000 THEN 300
+		 WHEN Engine_CC between 4001 and 6000 THEN 400
+		 WHEN Engine_CC between 6001 and 8000 THEN 500
+		 WHEN Engine_CC > 8000 THEN 600	
+		ELSE 0
+	END as Tax
+
+from 
+(
+	select distinct Engine_CC from VehicleDetails
+	
+) R1
+order by Engine_CC
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 42	 ------------------------------------------
+
+select makes.Make, sum(VehicleDetails.NumDoors) as TotalNumberOfDoors from VehicleDetails 
+inner join Makes on Makes.MakeID = VehicleDetails.MakeID
+group by Make
+order by TotalNumberOfDoors desc
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 43	 ------------------------------------------
+
+
+select makes.Make, sum(VehicleDetails.NumDoors) as TotalNumberOfDoors from VehicleDetails 
+inner join Makes on Makes.MakeID = VehicleDetails.MakeID
+group by Make
+having Make like 'Ford'
+
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 44	 ------------------------------------------
+
+
+select Makes.Make, count(*) as NumberOfModels from Makes
+inner join MakeModels on Makes.MakeID = MakeModels.MakeID
+group by Makes.Make
+order by NumberOfModels desc
+
+------------------------------------------------------------------------------------------------
+
+
+------------------------------------------ Problem 45	 ------------------------------------------
+
+
+select top 3 Makes.Make, count(*) as NumberOfModels from Makes
+inner join MakeModels on Makes.MakeID = MakeModels.MakeID
+group by Makes.Make
+order by NumberOfModels desc
+
+------------------------------------------------------------------------------------------------
+
+------------------------------------------ Problem 46	 ------------------------------------------
+
+select Max(NumberOfModels) as MaxNumberOfModels from
+(
+select Makes.Make, count(*) as NumberOfModels from Makes
+inner join MakeModels on Makes.MakeID = MakeModels.MakeID
+group by Makes.Make
+)R1
+
+------------------------------------------------------------------------------------------------
